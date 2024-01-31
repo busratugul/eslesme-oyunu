@@ -1,7 +1,15 @@
+body {
+  display: flex;
+  flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 div#oyun-cerceve {
     display: grid;
     grid-template-columns: 100px 100px 100px 100px;
     gap: 1rem;
+    padding: 2rem;
 }
 
 .kart {

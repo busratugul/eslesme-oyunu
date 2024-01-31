@@ -2,14 +2,18 @@ let puanText = document.getElementById('puanText')
 puan = 0
 
 const kartTemplate = `
-<div class="kart-cerceve">
-<div class="kart-onyuz>
-<img src="https://via.placeholder.com/100x100?text=?">
-</div>
-<div class="kart-arkayuz"><img src=""></div>
-</div>`
+    <div class="kart-cerceve">
+        <div class="kart-onyuz">
+            <img src="https://via.placeholder.com/100x100?text=?">
+        </div>
 
-const fotoNumaralari = []
+        <div class="kart-arkayuz">
+            <img src="">
+        </div>
+    </div>
+`
+
+let fotoNumaralari = []
 //random fotoğraf nosu ayarlayan fonksiyon
 let randomNum = function () {
   let randomArray = []
@@ -17,12 +21,27 @@ let randomNum = function () {
     let randomNumbers = Math.floor(Math.random() * 99)
     randomArray.push(randomNumbers, randomNumbers)
     if (randomArray.length > 6) break
+    shuffle(randomArray)
+    fotoNumaralari = randomArray
   }
-  return randomArray
+
+  return fotoNumaralari
+}
+
+//Arrayi karıştır
+function shuffle(array) {
+  let currentIndex = array.length, randomIndex
+  while (currentIndex > 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex--
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+  }
+  return array
 }
 
 console.log(randomNum())
-//Görev2: Bu numaraları 1-99 arası(1 ve 99 dahil) sayılardan rastgele 4 çift oluşturacak şekilde üreten bir fonksiyon yazarak, kod bloğundaki array değerini bu fonksiyondan dönen array ile değiştiren kodları yazın
+//Görev2: Bu numaraları 1-99 arası(1 ve 99 dahil) sayılardan rastgele 4 çift oluşturacak şekilde üreten bir fonksiyon yazarak, kod bloğundaki array değerini bu fonksiyondan dönen array ile değiştiren kodları yazın => satır 20de oluşturulan arrayi foto numaralarına atıyoruz
+console.log(fotoNumaralari)
 
 for (fotoNumara of fotoNumaralari) {
   const yeniKart = document.createElement('div')
@@ -96,6 +115,18 @@ function kartTiklama(olay) {
       secilenKart.classList.remove('acik')
     }, 1500)
   }
+
+  if (puan === 4) {
+    const body = document.querySelector("body")
+    setTimeout(() => {
+      body.innerHTML = ""
+      const kutlama = document.createElement("div")
+      kutlama.innerHTML = `<div style="width:480px"><iframe allow="fullscreen" frameBorder="0" height="270" src="https://giphy.com/embed/G96zgIcQn1L2xpmdxi/video" width="480"></iframe></div>`
+      body.append(kutlama)
+    }, 1000)
+    setTimeout(() => body.innerHTML = "<p>Oyun Bitti, Tekrar başlamak için sayfayı yenileyin.</p>", 8400)
+
+  }
 }
 
-//Açık kartlara ait img etiketlerinin src görsel dosyaları eşleşiyor mu?
+
